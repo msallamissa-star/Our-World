@@ -15,7 +15,8 @@
   var CATEGORIES = [
     { id:"farm",  label:"Farm & Home Friends", emoji:"", keys:["dog","cat","cow","sheep","pig","horse","donkey","alpaca"] },
     { id:"birds", label:"Birds",               keys:["duck","chicken","bird","parakeet","macaw","peacock"] },
-    { id:"wild",  label:"Wild Friends",         keys:["lion","elephant","monkey","bear","zebra","panda","frog","alligator","crocodile"] },
+    { id:"wild",  label:"Wild Friends",         keys:["lion","tiger","elephant","monkey","bear","zebra","panda","snake","frog","alligator","crocodile"] },
+    { id:"ocean", label:"Ocean Friends",        keys:["fish","dolphin","shark","turtle","jellyfish"] },
     { id:"dino",  label:"Dinosaurs",            keys:["trex","raptor"] }
   ];
 
@@ -182,7 +183,61 @@
       child:"This is a raptor. A raptor screeches! Raptors were fast dinosaurs that ran on two legs and had sharp claws.",
       parent:"Raptors, like Velociraptor and its cousins, were small, quick, feathered dinosaurs from long ago. The one here is a moving model. Running on the spot and making a quick screech together links the word to movement and fun.",
       ask:"Can you run fast like a raptor and give a little screech?",
-      later:"Have a gentle dinosaur run around the room together and then a big rest." }
+      later:"Have a gentle dinosaur run around the room together and then a big rest." },
+
+    tiger:{ name:"Tiger", say:"Roar", photos:4,
+      child:"This is a tiger. A tiger roars! Tigers are big orange cats with black stripes, and they love to swim.",
+      parent:"Tigers are the largest wild cats, living in the forests of Asia. Every tiger has its own pattern of stripes, and unlike most cats they love water and are strong swimmers. Naming the colours orange and black and counting stripes together builds words and patterns.",
+      ask:"Can you do a big tiger roar with me? Can you find the orange and the black?",
+      later:"Draw some stripes together and say 'tiger' as you draw each one." },
+
+    snake:{ name:"Snake", say:"Ssss", photos:4,
+      child:"This is a snake. A snake says ssss! Snakes have no legs and slide along the ground.",
+      parent:"Snakes are reptiles with long bodies and no legs; they slide along to move and flick their tongue to smell the air. Most snakes are shy and would rather slip away. Wiggling a hand along like a snake while you both say ssss links the word to the movement.",
+      ask:"Can you hiss like a snake? Can you wiggle your hand along the floor?",
+      later:"Wiggle along the floor like a snake together and say 'ssss'." },
+
+    fish:{ name:"Fish", say:"Blub blub", photos:4,
+      child:"This is a fish. Fish go blub blub! Fish live in the water and swim with their fins.",
+      parent:"Fish live in water and breathe through gills, swimming with their fins. This little orange-and-white one is a clownfish, which makes its home among the soft, waving arms of a sea anemone. Blowing bubbles and saying blub blub together is a playful first water word.",
+      ask:"Can you blow bubbles like a fish? Can you find the orange fish?",
+      later:"At bath time, blow bubbles together and say 'fish' and 'blub blub'.",
+      nearNow:"If you have a fish tank or pass one in a shop, point and say 'fish' together." },
+
+    dolphin:{ name:"Dolphin", say:"Eee eee", photos:4,
+      child:"This is a dolphin. A dolphin clicks and whistles, eee eee! Dolphins are clever and love to leap out of the water.",
+      parent:"Dolphins are clever sea mammals that come up to breathe air and 'talk' to each other with clicks and whistles. They live in groups and love to leap and play. Whistling eee eee and pretending to leap together is great for playful sounds and movement.",
+      ask:"Can you whistle like a dolphin and leap? Eee eee!",
+      later:"Pretend to leap and splash like dolphins together." },
+
+    shark:{ name:"Shark", say:"Swish", photos:4,
+      child:"This is a shark. A shark swishes through the water! Sharks are big fish with strong fins. This gentle giant is a whale shark.",
+      parent:"Sharks are large fish that have lived in the oceans for millions of years. The biggest of all is the gentle whale shark, which glides slowly and eats tiny sea creatures, not people. Talking calmly about big and gentle keeps it curious, not scary; sweep a hand through the air like a swimming shark together.",
+      ask:"Can you swim your hand like a big, gentle shark? Swish, swish!",
+      later:"At bath time, glide a hand slowly through the water like a shark." },
+
+    turtle:{ name:"Turtle", say:"Splash", photos:4,
+      child:"This is a turtle. A sea turtle swims with big flippers and carries its shell on its back.",
+      parent:"Sea turtles are gentle reptiles that live in the ocean and swim with flipper-shaped legs, carrying a hard shell for a home. They come ashore only to lay their eggs in the sand. Tucking in small like a turtle and stretching out to 'swim' together is a lovely movement game.",
+      ask:"Can you hide like a turtle in its shell, then swim with big flippers?",
+      later:"Curl up small like a turtle, then stretch out and 'swim' together." },
+
+    jellyfish:{ name:"Jellyfish", say:"Wibble wobble", photos:4,
+      child:"This is a jellyfish. A jellyfish floats and wobbles, soft and slow. It is see-through like jelly!",
+      parent:"Jellyfish are soft, see-through sea animals with no bones and no brain, drifting gently with the ocean currents and trailing soft tentacles. Watching one pulse and float, and wibbling your fingers slowly together, is calm and soothing for a little one.",
+      ask:"Can you wibble and float softly like a jellyfish?",
+      later:"Wave your arms slowly and 'float' like a jellyfish together." }
+  };
+
+  // The correct English term for each animal's voice (shown as the detail-page kicker).
+  // The playful onomatopoeia (the `say` field) is kept for the "Can you say ...?" copy game,
+  // so the label teaches the real word while the child still copies the fun sound.
+  var CALL = {
+    dog:"Bark", cat:"Meow", cow:"Moo", sheep:"Bleat", pig:"Oink", horse:"Neigh", donkey:"Bray",
+    duck:"Quack", chicken:"Cluck", bird:"Tweet", parakeet:"Chirp", macaw:"Squawk", peacock:"Honk",
+    lion:"Roar", elephant:"Trumpet", monkey:"Chatter", bear:"Growl", zebra:"Bray", panda:"Bleat",
+    frog:"Croak", alligator:"Hiss", crocodile:"Hiss", alpaca:"Hum", trex:"Roar", raptor:"Screech",
+    tiger:"Roar", snake:"Hiss", fish:"Blub", dolphin:"Click", shark:"Swish", turtle:"Splash", jellyfish:"Float"
   };
 
   // animals whose hero video is real footage of them making their sound, played unmuted
@@ -193,20 +248,22 @@
   // animals with no real recorded sound file on disk (no honest recording was available).
   // For these the sound button speaks the name and sound word warmly instead of playing
   // a file, and the hero video never tries to load a missing sound.m4a.
-  var NO_SOUND = { alpaca:1 };
+  // alpaca has no real recording; the new sea animals (fish, shark, turtle, jellyfish) and the snake
+  // have no honest isolated recording on Commons, so their button warmly speaks the name and sound word.
+  var NO_SOUND = { alpaca:1, snake:1, fish:1, shark:1, turtle:1, jellyfish:1, tiger:1 };
 
   // animals whose real call is loud (roars and big squawks). These play a little quieter, and the
   // core adds a short fade-in, so a sudden sound never startles a child held close to the iPad (Calm).
-  var LOUD = { bear:1, lion:1, trex:1, raptor:1, macaw:1, peacock:1 };
+  var LOUD = { bear:1, lion:1, trex:1, raptor:1, macaw:1, peacock:1, dolphin:1 };
 
   // build the full animal objects (asset paths derived from the key).
   // A version query keeps the browser from showing a stale photo, poster, or clip after a media update.
-  var ASSET_V = "?v=9";
+  var ASSET_V = "?v=10";
   var animals = {};
   Object.keys(ANIMAL_DATA).forEach(function(k){
     var d=ANIMAL_DATA[k], photos=[];
     for(var i=1;i<=d.photos;i++) photos.push("assets/animals/"+k+"/photos/"+k+"-"+i+".jpg"+ASSET_V);
-    animals[k]={ key:k, name:d.name, ready:(d.ready!==false), say:d.say,
+    animals[k]={ key:k, name:d.name, ready:(d.ready!==false), say:d.say, call:(d.call||CALL[k]||d.say),
       thumb:"assets/animals/_thumbs/"+k+".jpg"+ASSET_V,
       hero:"assets/animals/"+k+"/hero.mp4"+ASSET_V,
       poster:"assets/animals/"+k+"/poster.jpg"+ASSET_V,
@@ -238,11 +295,12 @@
         var a=animals[k]; if(!a) return;
         if(!a.ready){
           // not openable yet (assets incomplete): a calm "soon" tile, no play chip
+          // a real disabled button announces correctly to assistive tech (no ambiguous aria-disabled on a div)
           var soon=el(
-            '<div class="tile soon" data-key="'+k+'" aria-label="'+a.name+', coming soon" aria-disabled="true">'+
+            '<button class="tile soon" type="button" data-key="'+k+'" aria-label="'+a.name+', coming soon" disabled>'+
               '<img src="'+a.thumb+'" alt="'+a.name+'" loading="lazy">'+
               '<span class="label">'+a.name+'<span class="soon-tag">Soon</span></span>'+
-            '</div>');
+            '</button>');
           grid.appendChild(soon);
           return;
         }
@@ -277,7 +335,7 @@
     backTop.querySelector("button").addEventListener("click",function(){ P.stopSound(); P.go("#/home"); });
     inner.appendChild(backTop);
 
-    var nameBlock=el('<div class="name-block"><span class="kicker">'+a.say+'</span><h2 class="animal-name">'+a.name+'</h2></div>');
+    var nameBlock=el('<div class="name-block"><span class="kicker">'+a.call+'</span><h2 class="animal-name">'+a.name+'</h2></div>');
     inner.appendChild(nameBlock);
     var nameEl=nameBlock.querySelector('.animal-name');
     // a single warm pulse on the WRITTEN name, in time with the spoken name (sound to print link)
@@ -456,6 +514,7 @@
 
     var token=0;    // guards stale timers so audio and visuals never cross rounds
     var roundNum=0; // start easy with two choices, widen to three after the first correct round
+    var wins=0;     // little progress: stars earned this session (shown under the winner)
     function round(){
       token++; var myToken=token, answered=false;
       P.stopSound();
@@ -484,21 +543,45 @@
       stage.appendChild(hint);
       var row=el('<div class="game-choices"></div>');
       var cardByKey={};
-      choices.forEach(function(k){
-        var card=el('<button class="game-card"><img src="'+(animals[k].thumb||animals[k].photos[0])+'" alt="" draggable="false"></button>');
+      choices.forEach(function(k, ci){
+        // the image stays alt="" (a meaningful alt would leak the answer); the button gets a generic
+        // accessible name so it is at least operable/announced for a screen reader or switch user.
+        var card=el('<button class="game-card" aria-label="Choice '+(ci+1)+'"><img src="'+(animals[k].thumb||animals[k].photos[0])+'" alt="" draggable="false"></button>');
         cardByKey[k]=card;
         card.addEventListener("click",function(ev){
           if(answered || myToken!==token) return;
           if(k===target){
-            answered=true;
-            card.classList.add("right");
+            answered=true; wins++;
+            // 1) crown the winner: its photo grows and becomes the focus, the rest gently fade
+            card.setAttribute("aria-label","Correct, this is the "+targetName);   // tie success to the chosen control
+            row.classList.add("celebrate"); card.classList.add("win");
             stage.querySelectorAll(".game-card").forEach(function(c){ c.disabled=true; });
-            var r=card.getBoundingClientRect(); P.sparkle(ev.clientX||r.left+r.width/2, ev.clientY||r.top+20);
-            // celebrate by name, then advance only when the praise has finished (no overlap, no race)
+            // 2) one short, soft petal burst from the winner (emitted once, slow drift, never a fountain)
+            var r=card.getBoundingClientRect();
+            setTimeout(function(){ if(myToken!==token) return;
+              P.sparkle(r.left+r.width/2, r.top+r.height/2, {count:11, spread:Math.max(130,r.width), rise:120, life:1500});
+            },150);
+            // 3) a soft "well done" line + one more lit progress star
+            yay.textContent="Yes! This is the "+targetName+"!";
+            setTimeout(function(){ if(myToken!==token) return; yay.classList.add("show"); litStars(wins); },300);
+            // 4) audio strictly in sequence so nothing collides:
+            //    the grow settles -> the animal's REAL sound -> a breath -> soft spoken praise -> next round
             var advanced=false;
-            function next(){ if(advanced || myToken!==token) return; advanced=true; roundNum++; round(); }
-            P.speak("Yes! The "+targetName+"!", 0.95, next);
-            setTimeout(next, 2600);   // fallback if the speech 'end' event never fires
+            function advance(){ if(advanced || myToken!==token) return; advanced=true;
+              row.classList.add("fade");
+              setTimeout(function(){ if(myToken===token){ roundNum++; round(); } },420);
+            }
+            function praise(){ if(myToken!==token) return;
+              // soft, slightly higher and slower than normal, for a gentle "Yes! This is the cat!"
+              P.speak("Yes! This is the "+targetName+"!", 0.86, advance, 1.34); }
+            function afterSound(){ if(myToken!==token) return; setTimeout(praise, 250); }
+            var a=animals[target];
+            setTimeout(function(){ if(myToken!==token) return;
+              if(a.hasSound){ P.playSound(a.sound, afterSound, a.vol); }   // the same real recording as its detail page
+              else { afterSound(); }                                       // alpaca etc.: no recording, go straight to praise
+            }, 620);
+            // master safety net: always reach the next round even if every audio event silently dies
+            setTimeout(advance, 5600);
           } else {
             // gentle redirection, never correction: no shake, no "try again". Re-invite and light up the right tile.
             if(myToken!==token) return;
@@ -510,6 +593,13 @@
         row.appendChild(card);
       });
       stage.appendChild(row);
+      // the celebration line + a row of five soft progress stars (lit as Chloe gets them right)
+      var yay=el('<div class="game-yay" aria-live="polite"></div>');
+      var stars=el('<div class="game-stars" aria-hidden="true"></div>');
+      for(var sI=0;sI<5;sI++) stars.appendChild(el('<span class="gs"></span>'));
+      function litStars(n){ var gs=stars.querySelectorAll(".gs"); for(var gi=0;gi<gs.length;gi++){ gs[gi].classList.toggle("lit", gi<n); } }
+      litStars(wins);
+      stage.appendChild(yay); stage.appendChild(stars);
       // speak the question after a tiny beat so it does not collide with the cancel of the previous one
       setTimeout(function(){ if(myToken===token) P.speak("Can you find the "+targetName+"?"); }, 220);
     }

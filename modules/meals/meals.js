@@ -71,6 +71,8 @@
     var ingredients=ing.split(",").map(function(s){return s.trim();}).filter(Boolean);
     return { id:id, name:name, slot:slot, cuisine:cuisine, level:level, min:min,
       ingredients:ingredients,
+      main:ingredients.slice(0,3).join(", "),   // the card's short "Main" line, from the first ingredients
+
       allergens:deriveAllergens(ingredients, alg?alg.split(",").map(function(s){return s.trim();}):[]),
       groups:grp.split(",").map(function(s){return s.trim();}),
       iron:!!iron, vitC:!!vitC, portion:portion, why:why, safe:safe||"" };
