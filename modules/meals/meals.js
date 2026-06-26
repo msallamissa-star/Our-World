@@ -179,6 +179,22 @@
   EXTRA_MEALS.forEach(function(d){ MEALS.push(buildExtra(d)); });
   MEALS.forEach(function(m){ if(typeof SAFEFIX!=="undefined" && SAFEFIX[m.id]) m.safe=SAFEFIX[m.id]; });   // pediatric committee safety strengthening
 
+  /* ---- per-serving calories ----
+     Estimated from each recipe's actual gram/ml quantities using standard food-energy
+     values, then sanity-checked against the toddler/baby portion range. Shown as an
+     approximate guide ("about N kcal"), not a clinical figure. */
+  var KCAL = {
+    b1:150,b2:220,b3:80,b4:175,b5:135,b6:140,b7:145,b8:195,b9:190,b10:80,b11:120,
+    l1:185,l2:220,l3:135,l4:185,l5:125,l6:195,l7:230,l8:165,l9:175,l10:210,l11:175,l12:150,l13:125,l14:175,l15:180,
+    d1:160,d2:90,d3:190,d4:140,d5:275,d6:250,d7:215,d8:150,d9:185,d10:145,d11:225,d12:160,
+    s1:40,s2:20,s3:55,s4:80,s5:260,s6:120,s7:25,s8:95,
+    du1:225,du2:185,du3:145,du4:50,
+    fr1:170,fr2:125,fr3:85,fr4:50,
+    a1:90,a2:155,a3:75,a4:25,a5:100,a6:100,a7:130,a8:165,a9:110,a10:105,
+    n1:150,n2:105,n3:190,n4:190,n5:175,n6:130,n7:90,n8:180,n9:80,n10:345
+  };
+  MEALS.forEach(function(m){ m.kcal = KCAL[m.id] || null; });
+
   /* ---------------- preferences (localStorage) ---------------- */
   var PKEY = "chloe_meals_v1";
   function defaults(){ return { age:"12-23m", allergies:[], dislikes:[], cuisine:"any", snacks:2, quick:false, iron:false, favorites:[] }; }
@@ -299,7 +315,7 @@
     var c=el(
       '<article class="mcard tappable'+(m.level==="involved"?" is-step":"")+'" tabindex="0" role="button" aria-label="'+m.name+', open the recipe and shopping list">'+
         '<button class="fav'+(isFav(m.id)?" on":"")+'" aria-label="Save '+m.name+' to favourites" aria-pressed="'+isFav(m.id)+'">'+HEART+'</button>'+
-        '<div class="mtop">'+levelBadge(m.level)+'<span class="mb mb-time">'+m.min+' min</span><span class="mb mb-cui">'+cuisineLabel(m.cuisine)+'</span></div>'+
+        '<div class="mtop">'+levelBadge(m.level)+'<span class="mb mb-time">'+m.min+' min</span><span class="mb mb-cui">'+cuisineLabel(m.cuisine)+'</span>'+(m.kcal?'<span class="mb mb-kcal">~'+m.kcal+' kcal</span>':'')+'</div>'+
         '<h4 class="mname">'+m.name+'</h4>'+
         dots(m)+
         '<div class="mmain"><b>Main</b> '+mainText(m)+'</div>'+
@@ -324,6 +340,7 @@
       '<div class="mtop">'+levelBadge(m.level)+'<span class="mb mb-time">'+m.min+' min</span><span class="mb mb-cui">'+cuisineLabel(m.cuisine)+'</span></div>'+
       dots(m)+
       '<div class="mline"><b>Portion</b> '+m.portion+'</div>'+
+      (m.kcal?'<div class="mline"><b>Calories</b> about '+m.kcal+' kcal per serving</div>':'')+
       '<p class="why">'+m.why+'</p>'+
       (m.safe?'<div class="safe-line"><span class="safe-ic" aria-hidden="true">'+SHIELD+'</span><span><b>Safe prep.</b> '+m.safe+'</span></div>':'')+
       (ing?'<div class="recipe-sec"><h4>What goes in</h4><ul class="ing-list">'+ing+'</ul></div>':'')+
@@ -445,9 +462,10 @@
     var html=
       '<div class="surprise-kick">A little surprise for today</div>'+
       '<h4 class="mname" style="margin-top:0">'+pick.name+'</h4>'+
-      '<div class="mtop">'+levelBadge(pick.level)+'<span class="mb mb-time">'+pick.min+' min</span><span class="mb mb-cui">'+cuisineLabel(pick.cuisine)+'</span> <span class="mb mb-slot">'+pick.slot+'</span></div>'+
+      '<div class="mtop">'+levelBadge(pick.level)+'<span class="mb mb-time">'+pick.min+' min</span><span class="mb mb-cui">'+cuisineLabel(pick.cuisine)+'</span> <span class="mb mb-slot">'+pick.slot+'</span>'+(pick.kcal?'<span class="mb mb-kcal">~'+pick.kcal+' kcal</span>':'')+'</div>'+
       dots(pick)+
       '<div class="mline"><b>Portion</b> '+pick.portion+'</div>'+
+      (pick.kcal?'<div class="mline"><b>Calories</b> about '+pick.kcal+' kcal per serving</div>':'')+
       '<p class="why">'+pick.why+'</p>'+
       (pick.safe?'<div class="safe-line"><span class="safe-ic" aria-hidden="true">'+SHIELD+'</span><span><b>Safe prep.</b> '+pick.safe+'</span></div>':'')+
       '<div class="mtags">'+flags(pick)+'</div>'+
