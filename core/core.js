@@ -33,8 +33,11 @@
   if(!progress.visited) progress.visited = {};   // key -> count
   if(!progress.plays) progress.plays = 0;        // sounds/videos played
   if(!progress.sessions) progress.sessions = 0;
+  if(!progress.recipes) progress.recipes = 0;    // meal-plan recipes opened (grown-ups + baby)
+  if(!progress.firstSeen) progress.firstSeen = Date.now();
   function recordVisit(key){ progress.visited[key] = (progress.visited[key]||0)+1; saveProgress(progress); }
   function recordPlay(){ progress.plays++; saveProgress(progress); }
+  function recordRecipe(){ progress.recipes++; saveProgress(progress); }
 
   /* ---------------- speech (name + words read aloud) ----------------
      A soft, gentle, slightly sing-song voice for a toddler. Pitch and rate
@@ -231,13 +234,16 @@
   function render(){
     maybeNudge();
     stopSound();   // never let a sound or spoken line bleed across a navigation (tab switch, edge-swipe back)
-    var h=location.hash||"#/home";
-    // the grown-ups Table runs its own dark fine-dining theme, scoped by a body class so it
-    // never touches the children's light rose world. Toggled per route, cleaned on leaving.
+    var h=location.hash||"#/";
+    var isLanding=(h===""||h==="#/"||h==="#/welcome");
+    // the grown-ups Table and the My World landing each run their own dark theme, scoped by a
+    // body class so they never touch the children's light rose world. Toggled per route.
     document.body.classList.toggle("gm-active", h==="#/grownmeals");
+    document.body.classList.toggle("lp-active", isLanding);
     root.innerHTML="";
     var m=h.match(/^#\/animal\/([a-z]+)/);
-    if(h==="#/home"||h===""||h==="#/"){ ChloePlatform._renderHome(root); }
+    if(isLanding){ var lm=modules.landing; if(lm&&lm.renderHome){ lm.renderHome(root); } else { ChloePlatform._renderHome(root); } }
+    else if(h==="#/home"){ ChloePlatform._renderHome(root); }
     else if(m){ ChloePlatform._renderDetail(root, m[1]); }
     else if(h==="#/done"){ renderAllDone(root); }
     else if(h==="#/grownups"){ renderParentGate(root); }
@@ -255,7 +261,7 @@
     var bar=el(
       '<div class="topbar">'+
         '<div class="sunny spin" title="Sunny, your guide"><div class="core"></div>'+rays+'</div>'+
-        '<div class="brand">Chloe\'s World <small>Learn together with Sunny</small></div>'+
+        '<div class="brand" data-act="landing" role="button" tabindex="0" title="Back to My World">My World <small>For you, and your little one</small></div>'+
         '<div class="spacer"></div>'+
         '<div class="theme-toggle" role="group" aria-label="Choose the theme: girl or boy">'+
           '<button class="thm thm-girl'+(currentTheme==="girl"?" on":"")+'" data-thm="girl" aria-pressed="'+(currentTheme==="girl")+'"><span class="sw" aria-hidden="true"></span>Girl</button>'+
@@ -268,6 +274,7 @@
       var tb=e.target.closest("[data-thm]");
       if(tb){ setTheme(tb.getAttribute("data-thm")); return; }   // switch theme live, no reload
       var b=e.target.closest("[data-act]"); if(!b) return;
+      if(b.dataset.act==="landing") go("#/");
       if(b.dataset.act==="done") go("#/done");
       if(b.dataset.act==="grownups") go("#/grownups");
     });
@@ -368,6 +375,8 @@
     topbar:topbar, sectionNav:sectionNav, realWorldPick:realWorldPick, autoReveal:autoReveal,
     motionOK:function(){ return MOTION_OK; },
     getProgress:function(){ return progress; },
+    recordRecipe:recordRecipe,
+    sessionStartMs:function(){ return sessionStart; },
     registerModule:function(cfg){ modules[cfg.id]=cfg; },
     _module:function(id){ return modules[id]; },
     _animal:function(key){ var m=modules.animals; return m&&m.animals[key]; },

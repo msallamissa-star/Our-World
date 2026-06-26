@@ -24,7 +24,8 @@ All checked by sight on a contact sheet before inclusion. Full per-file author a
 - **Shark (whale shark):** hero "Swimming with a Whale Shark"; gallery are real whale-shark photographs. Silent animal; the button speaks the name.
 - **Turtle:** hero "Green sea turtles (Chelonia mydas) in Hawaii"; gallery are real green sea turtle photos. Silent animal; the button speaks the name.
 - **Jellyfish:** hero "Jellyfish at Monterey Bay Aquarium"; gallery are real moon-jellyfish photos. Silent animal; the button speaks the name.
-- **Re-sourced videos (kept their existing real sounds):** lion "Lion (Panthera leo) walking on the road"; bear "Brown bear fishing for salmon, Crescent Lake, Alaska"; horse "A grazing horse at the Écomusée de la Bintinais"; alpaca "Alpaca (Vicugna pacos)"; peacock "Male peacock tail display at Sofia Zoo". All muted, with their real sound (or none, for the alpaca) playing in sync.
+- **Re-sourced videos (kept their existing real sounds):** lion "Ishikawa Zoo roaring lion" (Wikimedia Commons, CC BY-SA 4.0), now visibly roaring in sync with the clean Lionroar.wav; bear "Brown bear fishing for salmon, Crescent Lake, Alaska"; horse "A grazing horse at the Écomusée de la Bintinais"; alpaca "Alpaca (Vicugna pacos)"; peacock "Male peacock tail display at Sofia Zoo". All muted, with their real sound (or none, for the alpaca) playing in sync.
+- **Re-sourced ocean videos (silent, as these animals make no vocal sound):** jellyfish "Jellyfish at the Aquarium of Genoa" (Wikimedia Commons, CC BY-SA 4.0), clear drifting jellyfish; shark "Tiger shark (Galeocerdo cuvier) in Fiji" (Wikimedia Commons, CC BY 3.0), a clean open-water shark with no diver in frame.
 
 ## Dog (first build, exact files)
 

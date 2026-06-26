@@ -164,6 +164,7 @@
 
   // the full recipe: idea, ingredients with quantities, method, pairing, then the shopping list
   function recipeDetail(d){
+    if(P.recordRecipe) P.recordRecipe();
     var ing=d.ingredients.map(ingLi).join("");
     var steps=d.steps.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join("");
     var html=
@@ -444,8 +445,23 @@
       var menuTitle=prefs.cuisine==="all" ? 'The full <span class="it">menu</span>' : ("The "+esc(czName(prefs.cuisine))+' <span class="it">menu</span>');
       v.appendChild(stitle("Browse everything", menuTitle, p.length+" dish"+(p.length>1?"es":"")+" to explore"));
       var mg=el('<div class="gm-grid"></div>');
-      p.forEach(function(d,i){ mg.appendChild(gridCard(d,i)); });
+      // render in batches so phones never mount hundreds of cards (and observers) at once
+      var BATCH=24, shown=0;
+      function addBatch(){
+        var end=Math.min(shown+BATCH, p.length);
+        for(var k=shown; k<end; k++){ var c=gridCard(p[k], k); if(shown>0) c.classList.add("gm-in"); mg.appendChild(c); }
+        shown=end;
+      }
+      addBatch();
       v.appendChild(mg);
+      if(p.length>shown){
+        var moreWrap=el('<div class="gm-three-foot" data-gm="rise"></div>');
+        var moreBtn=el('<button class="gm-btn ghost"></button>');
+        function syncBtn(){ moreBtn.textContent="Show more dishes ("+(p.length-shown)+" left)"; }
+        syncBtn();
+        moreBtn.addEventListener("click",function(){ addBatch(); if(shown>=p.length) moreWrap.remove(); else syncBtn(); });
+        moreWrap.appendChild(moreBtn); v.appendChild(moreWrap);
+      }
     }
 
     var favs=DISHES.filter(function(d){ return isFav(d.id); });
