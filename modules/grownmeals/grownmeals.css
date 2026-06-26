@@ -197,6 +197,39 @@ body.gm-active .toast{ background:linear-gradient(160deg, rgba(36,28,18,.96), rg
 .gm-feature.tier-sig .idx{ -webkit-text-stroke:1px rgba(236,207,139,.7); }
 .gm-card.tier-sig{ border-color:rgba(205,168,95,.28); }
 .gm-card.tier-sig::before{ opacity:.9; background:linear-gradient(180deg,#eccf8b,#cda85f); }
+
+/* nutrition (calories + macros) and allergens */
+.gm-nutri{ display:flex; align-items:stretch; gap:12px; margin-top:18px; flex-wrap:wrap; }
+.gm-kcal{ display:flex; flex-direction:column; justify-content:center; align-items:center; min-width:108px; padding:14px 18px; border-radius:var(--gm-rad-sm);
+  background:linear-gradient(158deg, rgba(205,168,95,.16), rgba(205,168,95,.04)); border:1px solid rgba(205,168,95,.28); }
+.gm-kcal .kv{ font-family:var(--gm-display); font-variation-settings:"opsz" 60; font-weight:560; font-size:1.95rem; line-height:1; color:var(--gm-gold-bright); }
+.gm-kcal .kl{ font-family:var(--gm-sans,"Nunito",sans-serif); font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--gm-muted); text-align:center; margin-top:6px; line-height:1.3; }
+.gm-macros{ flex:1 1 210px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.gm-macro{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px 8px; border-radius:var(--gm-rad-sm); background:rgba(245,237,222,.04); border:1px solid var(--gm-line); }
+.gm-macro .mv{ font-family:var(--gm-display); font-variation-settings:"opsz" 40; font-weight:560; font-size:1.32rem; color:var(--gm-ink); line-height:1; }
+.gm-macro .mv i{ font-style:normal; font-size:.6em; color:var(--gm-muted); margin-left:1px; }
+.gm-macro .ml{ font-family:var(--gm-sans,"Nunito",sans-serif); font-size:.6rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--gm-muted); margin-top:6px; }
+.gm-allerg{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:14px; color:var(--gm-ink-soft); font-weight:700; font-size:.9rem; }
+.gm-allerg .al-k{ font-family:var(--gm-sans,"Nunito",sans-serif); text-transform:uppercase; letter-spacing:.14em; font-size:.66rem; font-weight:800; color:#d98a5c; margin-right:2px; }
+.gm-allerg.none{ color:var(--gm-muted); font-style:italic; }
+.gm-allerg.none .al-k{ color:var(--gm-muted); }
+.gm-alg{ font-family:var(--gm-sans,"Nunito",sans-serif); font-size:.74rem; font-weight:800; letter-spacing:.03em; color:#ecb692; background:rgba(194,104,59,.13); border:1px solid rgba(194,104,59,.34); padding:4px 11px; border-radius:999px; }
+.gm-fhelp{ display:block; font-family:var(--gm-sans,"Nunito",sans-serif); font-weight:600; font-size:.8rem; color:var(--gm-muted-2); margin-top:6px; max-width:580px; line-height:1.45; text-transform:none; letter-spacing:0; }
+.gm-chip.avoid.on{ color:#2a1410; background:linear-gradient(160deg,#ecb692,#c2683b); border-color:rgba(194,104,59,.5); box-shadow:0 12px 28px -14px rgba(194,104,59,.6), inset 0 1px 0 rgba(255,255,255,.3); }
+.gm-chip.avoid.on .cdot{ background:#2a1410; }
+
+/* meal sub-labels ("To start" / "The mains") and the starters row */
+.gm-substar{ max-width:1080px; margin:20px auto 2px; font-family:var(--gm-sans,"Nunito",sans-serif); text-transform:uppercase; letter-spacing:.22em; font-weight:800; font-size:.72rem; color:var(--gm-gold); display:flex; align-items:center; gap:14px; }
+.gm-substar::after{ content:""; flex:1; height:1px; background:var(--gm-line); }
+.gm-substar.mains{ margin-top:24px; }
+.gm-starters{ max-width:1080px; margin:12px auto 0; display:grid; gap:14px; grid-template-columns:1fr 1fr; }
+@media(max-width:680px){ .gm-starters{ grid-template-columns:1fr; } }
+/* role badges (appetizer / salad / dessert) */
+.gm-role{ display:inline-flex; align-items:center; font-family:var(--gm-sans,"Nunito",sans-serif); font-size:.62rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; padding:5px 11px; border-radius:999px; white-space:nowrap; }
+.gm-role.app{ color:#8fd0c2; background:rgba(92,176,160,.13); border:1px solid rgba(92,176,160,.32); }
+.gm-role.sal{ color:#a9d6a0; background:rgba(124,200,120,.11); border:1px solid rgba(124,200,120,.3); }
+.gm-role.des{ color:#e6b3cf; background:rgba(200,120,160,.11); border:1px solid rgba(200,120,160,.3); }
+.gm-card .gm-role{ font-size:.58rem; padding:4px 9px; }
 .gm-fside{ display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
 .gm-open{ font-family:var(--gm-sans,"Nunito",sans-serif); font-weight:800; font-size:.82rem; letter-spacing:.04em; color:var(--gm-gold-bright); white-space:nowrap; display:inline-flex; align-items:center; gap:7px; }
 .gm-open svg{ width:16px; height:16px; fill:currentColor; transition:transform .25s; }
