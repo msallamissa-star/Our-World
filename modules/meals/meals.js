@@ -195,6 +195,23 @@
   };
   MEALS.forEach(function(m){ m.kcal = KCAL[m.id] || null; });
 
+  /* ---- per-serving macros (grams of protein / carbs / fat) ----
+     Computed from the same recipe quantities and reconciled against the calories
+     above (protein and carbs at 4 kcal/g, fat at 9). An approximate guide. */
+  var MACROS = {
+    b1:{p:5,c:27,f:3},b2:{p:10,c:18,f:13},b3:{p:3,c:12,f:3},b4:{p:6,c:28,f:5},b5:{p:4,c:17,f:5},b6:{p:6,c:16,f:6},b7:{p:11,c:1,f:11},b8:{p:9,c:22,f:9},
+    b9:{p:7,c:26,f:7},b10:{p:2,c:17,f:1},b11:{p:6,c:15,f:4},l1:{p:13,c:17,f:9},l2:{p:8,c:28,f:9},l3:{p:4,c:17,f:6},l4:{p:9,c:17,f:9},l5:{p:4,c:17,f:5},
+    l6:{p:11,c:15,f:11},l7:{p:7,c:30,f:9},l8:{p:10,c:15,f:9},l9:{p:11,c:16,f:8},l10:{p:8,c:20,f:11},l11:{p:7,c:30,f:3},l12:{p:11,c:13,f:4},l13:{p:9,c:7,f:7},
+    l14:{p:8,c:18,f:8},l15:{p:11,c:16,f:3},d1:{p:13,c:18,f:6},d2:{p:3,c:12,f:3},d3:{p:10,c:17,f:10},d4:{p:4,c:19,f:5},d5:{p:17,c:16,f:16},d6:{p:16,c:20,f:13},
+    d7:{p:13,c:14,f:16},d8:{p:10,c:14,f:6},d9:{p:12,c:18,f:8},d10:{p:6,c:23,f:4},d11:{p:13,c:15,f:13},d12:{p:10,c:11,f:7},s1:{p:2,c:6,f:2},s2:{p:1,c:4,f:0},
+    s3:{p:1,c:14,f:0},s4:{p:5,c:0,f:7},s5:{p:9,c:35,f:9},s6:{p:2,c:13,f:7},s7:{p:0,c:7,f:0},s8:{p:1,c:12,f:5},du1:{p:8,c:29,f:10},du2:{p:10,c:17,f:10},
+    du3:{p:4,c:16,f:8},du4:{p:1,c:10,f:1},fr1:{p:13,c:18,f:6},fr2:{p:5,c:24,f:0},fr3:{p:5,c:5,f:6},fr4:{p:1,c:10,f:1},a1:{p:2,c:15,f:2},a2:{p:9,c:20,f:5},
+    a3:{p:5,c:15,f:0},a4:{p:1,c:3,f:1},a5:{p:13,c:6,f:3},a6:{p:1,c:9,f:8},a7:{p:5,c:14,f:6},a8:{p:11,c:18,f:5},a9:{p:7,c:8,f:6},a10:{p:2,c:19,f:2},
+    n1:{p:6,c:27,f:3},n2:{p:7,c:3,f:8},n3:{p:11,c:16,f:7},n4:{p:11,c:13,f:8},n5:{p:6,c:22,f:3},n6:{p:13,c:7,f:6},n7:{p:4,c:14,f:3},n8:{p:6,c:25,f:6},
+    n9:{p:5,c:9,f:5},n10:{p:10,c:67,f:7}
+  };
+  MEALS.forEach(function(m){ var x=MACROS[m.id]; if(x){ m.protein=x.p; m.carbs=x.c; m.fat=x.f; } });
+
   /* ---------------- preferences (localStorage) ---------------- */
   var PKEY = "chloe_meals_v1";
   function defaults(){ return { age:"12-23m", allergies:[], dislikes:[], cuisine:"any", snacks:2, quick:false, iron:false, favorites:[] }; }
@@ -310,6 +327,11 @@
     return (m.main||"").split(",").map(function(s){ return s.trim(); }).filter(Boolean)
       .map(function(s,i){ return i===0?(s.charAt(0).toUpperCase()+s.slice(1)):s; }).join(", ");
   }
+  // a compact protein / carbs / fat line, shown wherever calories are shown
+  function macroLine(m){
+    if(m.protein==null) return '';
+    return '<div class="mline mline-macros"><b>Macros</b> '+m.protein+' g protein · '+m.carbs+' g carbs · '+m.fat+' g fat</div>';
+  }
   // the grid card: a tappable summary. Tap it to open the full recipe.
   function mealCard(m){
     var c=el(
@@ -320,6 +342,7 @@
         dots(m)+
         '<div class="mmain"><b>Main</b> '+mainText(m)+'</div>'+
         '<div class="mline"><b>Portion</b> '+m.portion+'</div>'+
+        macroLine(m)+
         (m.safe?'<div class="safe-line"><span class="safe-ic" aria-hidden="true">'+SHIELD+'</span><span><b>Safe prep.</b> '+m.safe+'</span></div>':'')+
         '<div class="mtags">'+flags(m)+'</div>'+
         '<span class="mopen">'+RECIPE_IC+' Tap for the recipe and shopping list</span>'+
@@ -341,6 +364,7 @@
       dots(m)+
       '<div class="mline"><b>Portion</b> '+m.portion+'</div>'+
       (m.kcal?'<div class="mline"><b>Calories</b> about '+m.kcal+' kcal per serving</div>':'')+
+      macroLine(m)+
       '<p class="why">'+m.why+'</p>'+
       (m.safe?'<div class="safe-line"><span class="safe-ic" aria-hidden="true">'+SHIELD+'</span><span><b>Safe prep.</b> '+m.safe+'</span></div>':'')+
       (ing?'<div class="recipe-sec"><h4>What goes in</h4><ul class="ing-list">'+ing+'</ul></div>':'')+
@@ -466,6 +490,7 @@
       dots(pick)+
       '<div class="mline"><b>Portion</b> '+pick.portion+'</div>'+
       (pick.kcal?'<div class="mline"><b>Calories</b> about '+pick.kcal+' kcal per serving</div>':'')+
+      macroLine(pick)+
       '<p class="why">'+pick.why+'</p>'+
       (pick.safe?'<div class="safe-line"><span class="safe-ic" aria-hidden="true">'+SHIELD+'</span><span><b>Safe prep.</b> '+pick.safe+'</span></div>':'')+
       '<div class="mtags">'+flags(pick)+'</div>'+
