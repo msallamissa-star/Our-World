@@ -283,9 +283,9 @@
     grownmeals:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l-1.2 6.6A5 5 0 0 1 13 13.4V19h3v2H8v-2h3v-5.6A5 5 0 0 1 7.2 9.6L6 3z"/></svg>'
   };
   var SECTIONS=[
-    { id:"play",       label:"Entertainment", sub:"Animals",     hash:"#/home"       },
-    { id:"meals",      label:"Meal Plans",    sub:"For Chloe",   hash:"#/meals"      },
-    { id:"grownmeals", label:"Grown-Ups",     sub:"The Table",   hash:"#/grownmeals" }
+    { id:"grownmeals", label:"Grown-Ups",          sub:"Meal Plan",  hash:"#/grownmeals" },
+    { id:"meals",      label:"Baby Meal Plan",     sub:"By age",     hash:"#/meals"      },
+    { id:"play",       label:"Baby Entertainment", sub:"Animals",    hash:"#/home"       }
   ];
   function sectionNav(active){
     var nav=el('<nav class="section-nav" aria-label="Sections"></nav>');

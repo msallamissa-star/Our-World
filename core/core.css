@@ -567,6 +567,39 @@ button{ font-family:inherit; cursor:pointer; border:none; background:none; color
 .chip.add{ background:linear-gradient(160deg,var(--glass-2),var(--glass)); }
 
 /* feeding tip strip */
+/* ---- age selector (baby meal plan adjusts by age) ---- */
+.age-bar{ max-width:980px; margin:8px auto 4px; padding:18px 20px; border-radius:var(--radius);
+  background:linear-gradient(160deg, var(--glass-2), var(--glass)); border:1px solid var(--glass-line); box-shadow:var(--shadow-sm); }
+.age-head{ margin-bottom:13px; }
+.age-head b{ font-family:var(--font-display); font-weight:700; font-size:1.16rem; color:var(--ink); display:block; }
+.age-head span{ color:var(--muted); font-weight:700; font-size:.9rem; line-height:1.4; }
+.age-row{ display:flex; gap:8px; flex-wrap:wrap; }
+.age-pill{ flex:1 1 auto; min-width:88px; min-height:60px; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+  background:rgba(255,255,255,.5); border:1.5px solid var(--glass-line); color:var(--ink); transition:transform .16s, border-color .16s, background .16s; }
+.age-pill b{ font-family:var(--font-display); font-weight:700; font-size:1.02rem; }
+.age-pill small{ font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); min-height:.7em; }
+@media(hover:hover){ .age-pill:hover{ border-color:var(--gold-2); transform:translateY(-2px); } }
+.age-pill.on{ background:linear-gradient(160deg,var(--gold-hi),var(--gold) 60%,var(--gold-2)); border-color:var(--gold-2); color:var(--ink-on-gold); box-shadow:0 12px 26px -14px var(--glow); }
+.age-pill.on small{ color:var(--ink-on-gold); opacity:.75; }
+.age-guide{ margin-top:15px; padding-top:15px; border-top:1px solid var(--glass-line); }
+.age-one{ font-weight:800; color:var(--accent); margin:0 0 11px; line-height:1.45; }
+.age-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+@media(max-width:620px){ .age-cols{ grid-template-columns:1fr; } }
+.age-col h5{ margin:0 0 5px; font-size:.7rem; text-transform:uppercase; letter-spacing:.14em; color:var(--gold-2); font-weight:800; }
+.age-col p{ margin:0; color:var(--muted); font-weight:600; font-size:.85rem; line-height:1.5; }
+.age-col.warn h5{ color:#c2683b; }
+.age-always{ margin-top:15px; padding-top:14px; border-top:1px solid var(--glass-line); }
+.age-always h5{ margin:0 0 9px; font-size:.7rem; text-transform:uppercase; letter-spacing:.14em; color:var(--accent); font-weight:800; }
+.age-always ul{ margin:0; padding:0; list-style:none; display:grid; gap:7px; grid-template-columns:1fr 1fr; }
+@media(max-width:620px){ .age-always ul{ grid-template-columns:1fr; } }
+.age-always li{ position:relative; padding-left:20px; color:var(--muted); font-weight:600; font-size:.83rem; line-height:1.45; }
+.age-always li::before{ content:"✓"; position:absolute; left:0; top:0; color:var(--gold-2); font-weight:900; }
+.milk-only{ max-width:760px; margin:18px auto; padding:30px 26px; border-radius:var(--radius); text-align:center;
+  background:linear-gradient(160deg, var(--glass-2), var(--glass)); border:1px solid var(--glass-line); box-shadow:var(--shadow-sm); }
+.milk-only h3{ font-family:var(--font-display); font-weight:700; font-size:1.55rem; color:var(--ink); margin:0 0 12px; }
+.milk-only p{ color:var(--muted); font-weight:600; line-height:1.6; max-width:560px; margin:0 auto 10px; }
+.milk-only .milk-cta{ color:var(--accent); font-weight:800; }
+
 .tipbar{ max-width:980px; margin:12px auto; display:flex; align-items:center; gap:13px; padding:13px 18px; border-radius:var(--radius-sm);
   background:linear-gradient(160deg, rgba(167,203,180,.12), rgba(255,255,255,.03)); border:1px solid rgba(167,203,180,.3);
   color:var(--ink); font-weight:700; font-size:.98rem; }
