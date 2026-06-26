@@ -249,6 +249,7 @@
     else if(h==="#/grownups"){ renderParentGate(root); }
     else if(h==="#/meals"){ var mm=modules.meals; if(mm&&mm.renderHome){ mm.renderHome(root); } else { ChloePlatform._renderHome(root); } }
     else if(h==="#/grownmeals"){ var gmm=modules.grownmeals; if(gmm&&gmm.renderHome){ gmm.renderHome(root); } else { ChloePlatform._renderHome(root); } }
+    else if(h==="#/songs"){ var sm=modules.songs; if(sm&&sm.renderHome){ sm.renderHome(root); } else { ChloePlatform._renderHome(root); } }
     else if(h==="#/game"){ var gm=modules.animals; if(gm&&gm.renderGame){ gm.renderGame(root); } else { ChloePlatform._renderHome(root); } }
     else { ChloePlatform._renderHome(root); }
     window.scrollTo(0,0);
@@ -301,6 +302,21 @@
         '<span class="sec-ico" aria-hidden="true">'+(SEC_ICON[s.id]||'')+'</span>'+
         '<span class="sec-tx"><b>'+s.label+'</b><small>'+s.sub+'</small></span>'+
       '</button>');
+      nav.appendChild(b);
+    });
+    nav.addEventListener("click",function(e){ var b=e.target.closest("[data-go]"); if(!b) return; go(b.dataset.go); });
+    return nav;
+  }
+
+  /* ---------------- Entertainment sub-nav (Animals / Songs) ---------------- */
+  var ENT_TABS=[
+    { id:"animals", label:"Animals", hash:"#/home",  ic:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm13 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-3 3c-2.6 0-4.7 2.3-4.7 4.4 0 1.6 1.3 2.6 3 2.6.9 0 1.2-.3 1.7-.3s.8.3 1.7.3c1.7 0 3-1 3-2.6C16.7 13.3 14.6 11 12 11z"/></svg>' },
+    { id:"songs",   label:"Songs",   hash:"#/songs", ic:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17.5V7l10-2v8.5M9 17.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zm10-4a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>' }
+  ];
+  function entSubNav(active){
+    var nav=el('<nav class="ent-subnav" aria-label="Entertainment"></nav>');
+    ENT_TABS.forEach(function(t){
+      var b=el('<button class="ent-tab'+(t.id===active?' on':'')+'" data-go="'+t.hash+'"'+(t.id===active?' aria-current="page"':'')+'>'+t.ic+t.label+'</button>');
       nav.appendChild(b);
     });
     nav.addEventListener("click",function(e){ var b=e.target.closest("[data-go]"); if(!b) return; go(b.dataset.go); });
@@ -372,7 +388,7 @@
   window.ChloePlatform = {
     icon:ICON, speak:speak, playSound:playSound, stopSound:stopSound,
     recordVisit:recordVisit, toast:toast, sparkle:sparkle, el:el, go:go,
-    topbar:topbar, sectionNav:sectionNav, realWorldPick:realWorldPick, autoReveal:autoReveal,
+    topbar:topbar, sectionNav:sectionNav, entSubNav:entSubNav, realWorldPick:realWorldPick, autoReveal:autoReveal,
     motionOK:function(){ return MOTION_OK; },
     getProgress:function(){ return progress; },
     recordRecipe:recordRecipe,

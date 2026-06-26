@@ -279,6 +279,7 @@
   function renderHome(root){
     var v=el('<div class="view">'); v.appendChild(P.topbar());
     v.appendChild(P.sectionNav("play"));
+    if(P.entSubNav) v.appendChild(P.entSubNav("animals"));
     v.appendChild(el(
       '<div class="h-hero">'+
         '<span class="kick">Hello, Chloe</span>'+
