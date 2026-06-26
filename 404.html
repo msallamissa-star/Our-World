@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#fbe7ec" />
+<title>Opening Chloe's World</title>
+<script>
+(function(){
+  var base = "/Our-World";
+  var path = window.location.pathname || "";
+  var route = path.indexOf(base) === 0 ? path.slice(base.length) : path;
+  route = route.replace(/^\/+|\/+$/g, "");
+  var known = { home:1, meals:1, grownmeals:1, game:1, done:1, grownups:1 };
+  var hash = window.location.hash;
+  if(!hash){
+    hash = known[route] ? "#/" + route : "#/home";
+  }
+  window.location.replace(base + "/" + hash);
+})();
+</script>
+</head>
+<body>
+Opening Chloe's World...
+</body>
+</html>
