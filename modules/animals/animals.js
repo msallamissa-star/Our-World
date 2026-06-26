@@ -258,7 +258,7 @@
 
   // build the full animal objects (asset paths derived from the key).
   // A version query keeps the browser from showing a stale photo, poster, or clip after a media update.
-  var ASSET_V = "?v=12";
+  var ASSET_V = "?v=13";
   var animals = {};
   Object.keys(ANIMAL_DATA).forEach(function(k){
     var d=ANIMAL_DATA[k], photos=[];
